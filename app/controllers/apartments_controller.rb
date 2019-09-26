@@ -14,4 +14,11 @@ class ApartmentsController < ApplicationController
        end
     end
     
+    
+    private
+    
+    def api_params
+        params.require(:apartment).permit(:address, :city, :state)
+    end
+    
 end

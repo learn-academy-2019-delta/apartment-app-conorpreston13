@@ -10,6 +10,25 @@ import { Nav, NavItem, NavLink } from 'reactstrap'
 
 
 class HomePage extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      apartments: []
+    }
+    this.getApts()
+  }
+  
+  getApts = () => {
+    /* global fetch */
+    fetch('/apartments')
+    .then((response) => {
+      return response.json()
+    })
+    .then((apartments) => {
+      this.setState({apartments: apartments})
+    })
+  }
+  
   render () {
     const {
       is_logged_in,
@@ -26,6 +45,7 @@ class HomePage extends React.Component {
           <center>
             <a href={sign_out_route}>Sign Out</a>
             <h1>Apartment Finder</h1>
+            <br/>
             <Nav>
               <NavItem>
                 <NavLink href = ''>Add Apartment</NavLink>
@@ -37,17 +57,31 @@ class HomePage extends React.Component {
                 <NavLink href = ''>Delete Apartment</NavLink>
               </NavItem>
             </Nav>
-            <h4>Future List of Apartments</h4>
+            <ul>
+              {this.state.apartments.map((apt, index) => {
+                return(
+                  <li key={index}>{apt.address}</li>
+                )
+              })
+              }
+            </ul>
           </center>
           </div>
         }
+        
         {!is_logged_in &&
           <div>
           <center>
             <a href={sign_in_route}>Sign In</a>
             <h1>Apartment Finder</h1>
+            <br/>
             <ul>
-              <h4>Future List of Apartments</h4>
+              {this.state.apartments.map((apt, index) => {
+                return(
+                  <li key={index}>{apt.address}</li>
+                )
+              })
+              }
             </ul>
           </center>
           </div>
