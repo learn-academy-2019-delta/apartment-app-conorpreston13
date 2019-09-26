@@ -60,7 +60,7 @@ class HomePage extends React.Component {
             <ul>
               {this.state.apartments.map((apt, index) => {
                 return(
-                  <li key={index}>{apt.address}</li>
+                  <li key={index}>{apt.address}, {apt.city}, {apt.state}</li>
                 )
               })
               }
@@ -78,7 +78,7 @@ class HomePage extends React.Component {
             <ul>
               {this.state.apartments.map((apt, index) => {
                 return(
-                  <li key={index}>{apt.address}</li>
+                  <li key={index}>{apt.address}, {apt.city}, {apt.state}</li>
                 )
               })
               }
