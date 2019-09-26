@@ -1,63 +1,17 @@
 import React from "react"
 import PropTypes from "prop-types"
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Link
-} from 'react-router-dom'
-import { Nav, NavItem, NavLink } from 'reactstrap'
-import NewApt from './NewApt'
-import Landing from './Landing'
 
-
-class HomePage extends React.Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      apartments: []
-    }
-    this.getApts()
-  }
-  
-  getApts = () => {
-    /* global fetch */
-    fetch('/apartments')
-    .then((response) => {
-      return response.json()
-    })
-    .then((apartments) => {
-      this.setState({apartments: apartments})
-    })
-  }
-  
-  handleNewApt = (apt) => {
-      console.log('It got here')
-    	createApt(apt)
-        .then(successApt => {
-            console.log("SUCCESS! New Apartment: ", successApt);
-            if (typeof successApt.address === 'string') {
-                let successStatus = this.state.success
-                successStatus = true
-                this.setState({ success: successStatus })
-                console.log(this.state.success)
-                window.location.reload()
-            }
-        })
-    }
-  
+class Landing extends React.Component {
   render () {
     const {
-      is_logged_in,
+    is_logged_in,
       sign_in_route,
       sign_out_route
     } = this.props
-
+    
     return (
       <React.Fragment>
-      <Router>
-      
-        {is_logged_in &&
+      {is_logged_in &&
           <div>
           <center>
             <a href={sign_out_route}>Sign Out</a>
@@ -83,11 +37,6 @@ class HomePage extends React.Component {
               }
             </ul>
           </center>
-          <Switch>
-             <Route exact path='/newapt' render={(props) => <NewApt {...props} success = {this.state.success} handleNewApt = {this.handleNewApt}  /> } />
-            
-            <Route exact path='/' component={HomePage} />
-          </Switch>
           </div>
         }
         
@@ -108,11 +57,9 @@ class HomePage extends React.Component {
           </center>
           </div>
         }
-        
-      </Router>
       </React.Fragment>
     );
   }
 }
 
-export default HomePage
+export default Landing
